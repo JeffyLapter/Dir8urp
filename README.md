@@ -19,10 +19,11 @@ NothingH 负责url输入检测函数开发，要求：用户输入任意url都�
 Anaz负责收集二级敏感目录，txt格式，换行书写，文件位置位于DICTS.txt<br>
 <br>
 示例<br>
-  >>dicttest<br>
-  >>admin<br>
-  >>admin2<br>
-  >>wp-login<br>
-  >>jboss<br>
-  >>phpcms<br>
+>>dicttest<br>
+>>admin<br>
+>>admin2<br>
+>>wp-login<br>
+>>jboss<br>
+>>phpcms<br>
+<br>
 项目完成开发后作为默认后台字典使用<br>
