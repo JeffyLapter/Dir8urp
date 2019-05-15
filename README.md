@@ -2,7 +2,10 @@ Dir8urp
 ==
 开发语言python，它的名字叫Dir8urp，非常de炫酷<br>
 功能为扫描后台目录与敏感文件<br>
-
+#依赖库：Simhash requests
+命令：<br>
+pip install Simhash<br>
+pip install requests<br>
 <br>
 
 函数接口设计规范：
