@@ -2,6 +2,7 @@ Dir8urp
 ==
 开发语言python，它的名字叫Dir8urp，非常de炫酷<br>
 功能为扫描后台目录与敏感文件<br>
+
 <br>
 函数接口设计规范：
 --
@@ -18,12 +19,12 @@ Anaz负责收集二级敏感目录，txt格式，换行书写，文件位置位�
 
 示例<br>
 
->dicttest 
->admin 
->admin2 
->wp-login 
->jboss 
->phpcms
+>dicttest <br>
+>admin <br>
+>admin2 <br>
+>wp-login <br>
+>jboss <br>
+>phpcms<br>
 <br>
 
 项目完成开发后作为默认后台字典使用<br>
