@@ -114,6 +114,7 @@ def SerachURL(URLstr):
         elif not((URLstr[i]>='a' and URLstr[i]<='z') or (URLstr[i]>='A' and URLstr[i]<='Z') or (URLstr[i]>='0' and URLstr[i]<='9') or URLstr[i]=='+' or URLstr[i]=='/' or URLstr[i]=='?' or URLstr[i]=='%' or URLstr[i]=='#' or URLstr[i]=='&' or URLstr[i]=='=' or URLstr[i]=='.'):
             fnum=i+1
             break
+    newURLstr=URLstr[fnum:count]
     if newURLstr[count-fnum-1]=='/':
         CorrectURL="http://"+URLstr[fnum:count-1]
     else:
