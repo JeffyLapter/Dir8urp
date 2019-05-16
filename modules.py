@@ -105,20 +105,17 @@ class id_404:
         if url in self
 """
 def SerachURL(URLstr):
-    count=URLstr.find(".com")
-    flag=0
+    count=len(URLstr)
+    flag=fnum=0
     for i in range(count-1,-1,-1):
-        if URLstr[i]=='/' and flag==0:
-            flag=1
-        elif not((URLstr[i]>='a' and URLstr[i]<='z') or (URLstr[i]>='A' and URLstr[i]<='Z') or (URLstr[i]>='0' and URLstr[i]<='9') or URLstr[i]=='+' or (URLstr[i]=='/' and flag==0) or URLstr[i]=='?' or URLstr[i]=='%' or URLstr[i]=='#' or URLstr[i]=='&' or URLstr[i]=='=' or URLstr[i]=='.'):
-            if flag==1:
-                fnum=i+2
-            else:
-                fnum=i+1
-                flag=1
+        if URLstr[i]=='/' and URLstr[i-1]=='/':
+            fnum=i+1
             break
-    if flag==0:
-        fnum=0
-    newURLstr=URLstr[fnum:count]
-    CorrectURL="http://"+newURLstr+".com/"
+        elif not((URLstr[i]>='a' and URLstr[i]<='z') or (URLstr[i]>='A' and URLstr[i]<='Z') or (URLstr[i]>='0' and URLstr[i]<='9') or URLstr[i]=='+' or URLstr[i]=='/' or URLstr[i]=='?' or URLstr[i]=='%' or URLstr[i]=='#' or URLstr[i]=='&' or URLstr[i]=='=' or URLstr[i]=='.'):
+            fnum=i+1
+            break
+    if newURLstr[count-fnum-1]=='/':
+        CorrectURL="http://"+URLstr[fnum:count-1]
+    else:
+        CorrectURL="http://"+URLstr[fnum:count]
     return CorrectURL
