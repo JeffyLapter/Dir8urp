@@ -1,4 +1,9 @@
-#Errors=
+from simhash import Simhash
+from Dicts import header
+import requests
+
+#--* Below are some raw data for extended modules to call with *--#
+#-- $ServerReplyStatus is used for external function to call with in order to display the error reply of the Server --#
 SeverReplyStatus={
     '200':'[+] 200 OK',
     '204':'[+] Sever Returned status 204',
@@ -11,38 +16,26 @@ SeverReplyStatus={
     '503':'[-] Sever Error 503'
 
 }
-from simhash import Simhash
-from Dicts import header
-import requests
-#THIS IS THE FUN to identify the result of replys
-def getReplyStatusNumber(replys):
+
+
+#-- Function to get a returned status code and convert it to str --#
+#-- ! NOTICE: FUNCTION OUT OF STYLE, MAY CAUSE ERRORS ! --#
+def get_Reply_StatusNumber(replys):
     return replys[11:-2]
-#THIS IS THE FUN to ana the res of reply
-def GetReplyStatus(ReplyStatusNumber):
+
+
+#-- Function to Display the Returned Results --#
+#-- Function takes two param,P1 as the ERROR list dict,P2 as the Reply_status of the server. --#
+def Display_Reply_Status(ERROR_LIST,ReplyStatusNumber):
     try:
-        print(SeverReplyStatus[ReplyStatusNumber]) 
-    except:
-        print('Unknown error')  
+        print(ERROR_LIST[ReplyStatusNumber]) 
+    except:#-- The Function needed to be rewrite, in order to deal the unknown error as more s possible --#
+        print('Unknown error')
 
-#test=str(requests.get('http://39.106.97.149/151351531.txt'))
-#method: GetReplyStatus(getReplyStatusNumber(test))
-#THIS IS THE FUN TO CHECK THE URL;
 
-#def precheck(inputs):
-"""
-def precheck(inputs):
-    if inputs[0:5] == "http:":
-        if inputs[:-1]!='/':
-            return inputs
-        else:
-            inputs[:-1]=''
-            return inputs
-    else:
-        return "http://"+inputs
-"""
-
-#The FUN to identify 404:
-def identify404(domain,nowdomain):
+#-- Main Function to identify 404 and wrong replys with status 200 --#
+#-- domain uses as url trying to judge whether it existed or not, nowdomain display the error msg --# 
+def identify_404(domain,nowdomain):
     page4041=requests.get(domain+'/dgasgdfsdf.txt',headers=header)
     page4042=requests.get(domain+'/dfag04ggg00dfw32a.xpd',headers=header)
     pagenow=requests.get(nowdomain,headers=header)
@@ -54,13 +47,47 @@ def identify404(domain,nowdomain):
     hash_page4041=Simhash(str(page4041.content))
     hash_page4042=Simhash(str(page4042.content))
     hash_pagenow=Simhash(str(pagenow.content))
-    if hash_page4041.distance(hash_page4042) != 0:
+    if hash_page4041.distance(hash_page4042) != 0:#Check whether 404 has different echos
         print("[!] Maybe different returns,check yourself: "+nowdomain)
     else:
         if hash_pagenow.distance(hash_page4041) < 3:
             return False
         else:
             return True
+
+#-- main Function to convert url to standard url --#
+#-- FUNCTION receive one str param,returns a standard url like "http://example.com/admin" --#
+#-- WRITTEN BY NOTHING_H --#
+def Standard_URL_Convert(URLstr):
+    count=len(URLstr)
+    fnum=0
+    for i in range(count-1,-1,-1):
+        if URLstr[i]=='/' and URLstr[i-1]=='/':
+            fnum=i+1
+            break
+        elif not((URLstr[i]>='a' and URLstr[i]<='z') or (URLstr[i]>='A' and URLstr[i]<='Z') or (URLstr[i]>='0' and URLstr[i]<='9') or URLstr[i]=='+' or URLstr[i]=='/' or URLstr[i]=='?' or URLstr[i]=='%' or URLstr[i]=='#' or URLstr[i]=='&' or URLstr[i]=='=' or URLstr[i]=='.'):
+            fnum=i+1
+            break
+    newURLstr=URLstr[fnum:count]
+    if newURLstr[count-fnum-1]=='/':
+        CorrectURL="http://"+URLstr[fnum:count-1]
+    else:
+        CorrectURL="http://"+URLstr[fnum:count]
+    return CorrectURL
+
+
+
+"""
+def precheck(inputs):
+    if inputs[0:5] == "http:":
+        if inputs[:-1]!='/':
+            return inputs
+        else:
+            inputs[:-1]=''
+            return inputs
+    else:
+        return "http://"+inputs
+"""
 
 """
 test1=requests.get('http://www.baidu.com/dgagasgf.txt')
@@ -104,19 +131,3 @@ class id_404:
     def is404(self,url):
         if url in self
 """
-def SerachURL(URLstr):
-    count=len(URLstr)
-    fnum=0
-    for i in range(count-1,-1,-1):
-        if URLstr[i]=='/' and URLstr[i-1]=='/':
-            fnum=i+1
-            break
-        elif not((URLstr[i]>='a' and URLstr[i]<='z') or (URLstr[i]>='A' and URLstr[i]<='Z') or (URLstr[i]>='0' and URLstr[i]<='9') or URLstr[i]=='+' or URLstr[i]=='/' or URLstr[i]=='?' or URLstr[i]=='%' or URLstr[i]=='#' or URLstr[i]=='&' or URLstr[i]=='=' or URLstr[i]=='.'):
-            fnum=i+1
-            break
-    newURLstr=URLstr[fnum:count]
-    if newURLstr[count-fnum-1]=='/':
-        CorrectURL="http://"+URLstr[fnum:count-1]
-    else:
-        CorrectURL="http://"+URLstr[fnum:count]
-    return CorrectURL
