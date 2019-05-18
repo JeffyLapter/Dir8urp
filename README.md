@@ -45,7 +45,12 @@ pip install requests<br>
 公示：
 --
 主检测函数将进行重写，以模块化类形式优化程序结构并单独封装，将利用hash方法，暂存方式，实现多个不同404页存储比对，来确保文件存在性检测返回结果精确。<br>
-主程序位置BDirectory.py 实现主程序命令交互式菜单.<br>
+主程序位置BDirectory.py <br>
+menu.py实现主程序命令交互式菜单.<br>
+rely.py中HELP_DOUCUMENT为帮助文档，以后所有帮助文档模块均从rely调用<br>
+READ_HELP_DOUCUMENTS()函数将会被优化为多帮助文档形式，用于BDirectory.py进行调用<br>
+将会重新一个ADD_DICT函数，以用于添加字典，或涉及文件操作相关知识<br>
+<br>
 
 2019/5/16任务分配：
 --
