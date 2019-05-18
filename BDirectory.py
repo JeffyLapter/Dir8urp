@@ -1,4 +1,6 @@
-from Dicts import AddDictsPrimary
-test=list()
-test=AddDictsPrimary()
-print(test)
+#from Dicts import AddDictsPrimary
+#from modules import *
+
+
+
+

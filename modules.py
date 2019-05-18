@@ -1,90 +1,91 @@
 from simhash import Simhash
 from Dicts import header
 import requests
-from colorama import Fore, Back, Style, init  # THE COLORAMA USED FOR DISPLAY COLORED NOTES
+from colorama import Fore,Back,Style,init   #THE COLORAMA USED FOR DISPLAY COLORED NOTES
+init(autoreset=True)                        #-- AUTO RESET THE COLOR OF OUTPUTS --#
 
-init(autoreset=True)  # -- AUTO RESET THE COLOR OF OUTPUTS --#
 
-# -- =======================RAW DATA AERA=================================== --#
-# --* Below are some raw data for extended modules to call with *--#
-# -- $ServerReplyStatus is used for external function to call with in order to display the error reply of the Server --#
-SeverReplyStatus = {
-    '200': '[+] 200 OK',
-    '204': '[+] Sever Returned status 204',
-    '302': '[!] Sever Returned status 302 redirect',
-    '403': '[-] 403-Forbidden',
-    '404': '[-] 404 Not Found',
-    '405': '[-] 405 ERROR',
-    '408': '[-] Request Time out',
-    '500': '[-] Sever ERROR 500',
-    '503': '[-] Sever Error 503'
-
-}
-LOGO = {
-    1: r'    ____      _           ____                        ',
-    2: r'   / __ \\   (_)  ____   ( __ )   __  __   _____   ____',
-    3: r'  / / / /  / /  / ___/  / __  |  / / / /  / ___/  / __ \\',
-    4: r' / /_/ /  / /  / /     / /_/ /  / /_/ /  / /     / /_/ /',
-    5: r'/_____/  /_/  /_/      \____/   \__,_/  /_/     / .___/ ',
-    6: r'                                               /_/      '
+#-- =======================RAW DATA AERA=================================== --#
+#--* Below are some raw data for extended modules to call with *--#
+#-- used to USERS_SELECT --#
+AVAILABLE_USER_SELECT={
+    'HELP':1,
+    'DB':2
 }
 
-# -- =======================RAW DATA AERA=================================== --#
+#-- $ServerReplyStatus is used for external function to call with in order to display the error reply of the Server --#
+SeverReplyStatus={
+    '200':'[+] 200 OK',
+    '204':'[+] Sever Returned status 204',
+    '302':'[!] Sever Returned status 302 redirect',
+    '403':'[-] 403-Forbidden',
+    '404':'[-] 404 Not Found',
+    '405':'[-] 405 ERROR',
+    '408':'[-] Request Time out',
+    '500':'[-] Sever ERROR 500',
+    '503':'[-] Sever Error 503'
+
+}
+LOGO={
+    1:r'    ____      _           ____                        ',
+    2:r'   / __ \\   (_)  ____   ( __ )   __  __   _____   ____',
+    3:r'  / / / /  / /  / ___/  / __  |  / / / /  / ___/  / __ \\',
+    4:r' / /_/ /  / /  / /     / /_/ /  / /_/ /  / /     / /_/ /',
+    5:r'/_____/  /_/  /_/      \____/   \__,_/  /_/     / .___/ ',
+    6:r'                                               /_/      '
+}
+
+#-- =======================RAW DATA AERA=================================== --#
 '''---------------------------RAW DATA AERA ENDS RIGHT HERE-----------------'''
 
+
 '''#-- =====================================================================================FUNCTION AERA============================================================= --#'''
+
 
 """==================--WRITTEN BY LapterGrsd--====================-"""
 
 
-# ------------------COLOR_PRIMARY_DEFINE----------------------------------#
-# -- THE FUNCTION TO CHANGE THE OUTPUT COLOR --#
-# -- USAGE: print (Display_Color.LOGO(PRIMARY_COLOR_DEFINE,"stes")) --#
+#------------------COLOR_PRIMARY_DEFINE----------------------------------#
+#-- THE FUNCTION TO CHANGE THE OUTPUT COLOR --#
+#-- USAGE: print (Display_Color.LOGO(PRIMARY_COLOR_DEFINE,"stes")) --#
 class Display_Color(object):
-    def WRONG(self, s):
-        return Fore.RED + s + Fore.RESET
-
-    def SUCCESS(self, s):
-        return Fore.GREEN + s + Fore.RESET
-
-    def WARNING(self, s):
-        return Fore.YELLOW + s + Fore.RESET
-
-    def LOGO(self, s):  # -- COLOR
-        return Fore.MAGENTA + s + Fore.RESET
-PRIMARY_COLOR_DEFINE = Display_Color()  # -- THE CLASS FOR COLORED OUT PUTS --#
+    def WRONG(self,s):
+        return Fore.RED + s +Fore.RESET
+    def SUCCESS(self,s):
+        return Fore.GREEN + s +Fore.RESET
+    def WARNING(self,s):
+        return Fore.YELLOW + s +Fore.RESET 
+    def LOGO(self,s):#-- COLOR 
+        return Fore.MAGENTA+s+Fore.RESET
+PRIMARY_COLOR_DEFINE =Display_Color()#-- THE CLASS FOR COLORED OUT PUTS --#
 
 
-# ---------------------main_LOGO-----------------------------------------#
-# -- FUNCTION TO DISPLAY LOGO --#
+#---------------------main_LOGO-----------------------------------------#
+#-- FUNCTION TO DISPLAY LOGO --#
 def main_LOGO():
-    for i in range(1, 7):
-        print(Display_Color.LOGO(PRIMARY_COLOR_DEFINE, LOGO[i]))
+    for i in range(1,7):
+        print(Display_Color.LOGO(PRIMARY_COLOR_DEFINE,LOGO[i]))
 
-main_LOGO()
-
-
-# --------------------get_Reply_StatusNumber-------------------------------#
-# -- Function to get a returned status code and convert it to str --#
-# -- ! NOTICE: FUNCTION OUT OF STYLE, MAY CAUSE ERRORS ! --#
+#--------------------get_Reply_StatusNumber-------------------------------#
+#-- Function to get a returned status code and convert it to str --#
+#-- ! NOTICE: FUNCTION OUT OF STYLE, MAY CAUSE ERRORS ! --#
 def get_Reply_StatusNumber(replys):
     return replys[11:-2]
 
 
-# -----------------------Display_Reply_Status-------------------------------#
-# -- Function to Display the Returned Results --#
-# -- Function takes two param,P1 as the ERROR list dict,P2 as the Reply_status of the server. --#
-def Display_Reply_Status(ERROR_LIST, ReplyStatusNumber):
+#-----------------------Display_Reply_Status-------------------------------#
+#-- Function to Display the Returned Results --#
+#-- Function takes two param,P1 as the ERROR list dict,P2 as the Reply_status of the server. --#
+def Display_Reply_Status(ERROR_LIST,ReplyStatusNumber):
     try:
-        print(ERROR_LIST[ReplyStatusNumber])
-    except:  # -- The Function needed to be rewrite, in order to deal the unknown error as more s possible --#
+        print(ERROR_LIST[ReplyStatusNumber]) 
+    except:#-- The Function needed to be rewrite, in order to deal the unknown error as more s possible --#
         print('Unknown error')
 
 
-# --------------------------identify_404------------------------------------#
-# -- Main Function to identify 404 and wrong replys with status 200 --#
-# -- domain uses as url trying to judge whether it existed or not, nowdomain display the error msg --#
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#--------------------------identify_404------------------------------------#
+#-- Main Function to identify 404 and wrong replys with status 200 --#
+#-- domain uses as url trying to judge whether it existed or not, nowdomain display the error msg --# 
 def identify_404(domain, nowdomain):
     try:
       page4041 = requests.get(domain + '/dgasgdfsdf.txt', headers=header)
@@ -130,41 +131,46 @@ def identify_404(domain, nowdomain):
             return False
         else:
             return True
-
-
+"""----------------sECOND EDITED BY alazymechnaic------------------------------"""
 """-----------------LAPTER GRSD!S AEERA ENDS RIGHT HERE------------------"""
 
+
+
+
+
 '''#-=============================--- WRITTEN BY NOTHING_H -==================================-#'''
-
-
-# -- main Function to convert url to standard url --#
-# -- FUNCTION receive one str param,returns a standard url like "http://example.com/admin" --#
+#-- main Function to convert url to standard url --#
+#-- FUNCTION receive one str param,returns a standard url like "http://example.com/admin" --#
 def Standard_URL_Convert(URLstr):
-    count = len(URLstr)
-    fnum = 0
-    for i in range(count - 1, -1, -1):
-        if URLstr[i] == '/' and URLstr[i - 1] == '/':
-            fnum = i + 1
+    count=len(URLstr)
+    fnum=0
+    for i in range(count-1,-1,-1):
+        if URLstr[i]=='/' and URLstr[i-1]=='/':
+            fnum=i+1
             break
-        elif not ((URLstr[i] >= 'a' and URLstr[i] <= 'z') or (URLstr[i] >= 'A' and URLstr[i] <= 'Z') or (
-                URLstr[i] >= '0' and URLstr[i] <= '9') or URLstr[i] == '+' or URLstr[i] == '/' or URLstr[i] == '?' or
-                  URLstr[i] == '%' or URLstr[i] == '#' or URLstr[i] == '&' or URLstr[i] == '=' or URLstr[i] == '.'):
-            fnum = i + 1
+        elif not((URLstr[i]>='a' and URLstr[i]<='z') or (URLstr[i]>='A' and URLstr[i]<='Z') or (URLstr[i]>='0' and URLstr[i]<='9') or URLstr[i]=='+' or URLstr[i]=='/' or URLstr[i]=='?' or URLstr[i]=='%' or URLstr[i]=='#' or URLstr[i]=='&' or URLstr[i]=='=' or URLstr[i]=='.'):
+            fnum=i+1
             break
-    newURLstr = URLstr[fnum:count]
-    if newURLstr[count - fnum - 1] == '/':
-        CorrectURL = "http://" + URLstr[fnum:count - 1]
+    newURLstr=URLstr[fnum:count]
+    if newURLstr[count-fnum-1]=='/':
+        CorrectURL="http://"+URLstr[fnum:count-1]
     else:
-        CorrectURL = "http://" + URLstr[fnum:count]
+        CorrectURL="http://"+URLstr[fnum:count]
     return CorrectURL
 
 
-# -------------------------------Standard_URL_Convert-------------------------#
+
+#-------------------------------Standard_URL_Convert-------------------------#
 '''#-=-----------------=Nothing_H !S AREA ENDS RIGHT HERE===--------------------------------==-#'''
+
+
+
+
 
 '''#-- =============================================================== FUNCTION AERA END RIGHT HERE ============================================================= --#'''
 
-# -- BELOW ARE FUNCTIONS UNUSED --#
+
+#-- BELOW ARE FUNCTIONS UNUSED --#
 """
 def precheck(inputs):
     if inputs[0:5] == "http:":
@@ -201,13 +207,13 @@ class id_404:
                 response=requests.get(url)
                 if response.status_code in self._rcode404:
                     self.check_next(response.content,url)
-
+    
     def check_next(self, _page404, _url404):
         if _page404 not in self._page404:
             self._page404.append(_page404)
         if _url404 not in self._url404:
             self._url404.append(_url404)
-
+    
     def judegesim(self, page_1,page_2):
         page_1_hash=Simhash(page_1)
         page_2_hash=Simhash(page_2)
