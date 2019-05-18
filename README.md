@@ -19,11 +19,24 @@ pip install requests<br>
 每个功能需测试后再上线<br>
 新功能必须写注释，为防止乱码，用英语<br>
 在可用性基础上尽量保证函数的性能，不允许在函数中有初始化后全程未使用的变量出现<br>
+所有人请在规定的代码区域书写代码,新建函数放在modules.py line36 之后，并仿照原有格式书写注释和作者名称<br>
 >函数注释使用规范<br>
 >#-- This is a Note before Functions --#<br>
 >#-- ! THIS IS A WARNING NOTE BEFORE IMPORTANT FUNCTIONS ! --#<br>
 >#-- * this is a note for one line note in functions * --#<br>
 >#-- $variable means $variable is a variable that you used in your notes to explain your functions --#<br>
+<br>
+
+颜色类使用方法：
+--
+位置modules.py line 45 class Display_Color(object)<br>
+使用方法<br>
+>Display_Color.LOGO(PRIMARY_COLOR_DEFINE,"要更改颜色的数据")
+>Display_Color.WRONG(PRIMARY_COLOR_DEFINE,"要更改颜色的数据")
+>Display_Color.SUCCESS(PRIMARY_COLOR_DEFINE,"要更改颜色的数据")
+>Display_Color.WARING(PRIMARY_COLOR_DEFINE,"要更改颜色的数据")
+<br>
+注意! :该类仅返回带有颜色的数据，不输出，输出请使用print，例如print (Display_Color.LOGO(PRIMARY_COLOR_DEFINE,要改变颜色的数据))
 <br>
 
 公示：
