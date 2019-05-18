@@ -106,7 +106,7 @@ class id_404:
 """
 def SerachURL(URLstr):
     count=len(URLstr)
-    flag=fnum=0
+    fnum=0
     for i in range(count-1,-1,-1):
         if URLstr[i]=='/' and URLstr[i-1]=='/':
             fnum=i+1
