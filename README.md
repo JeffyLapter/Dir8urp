@@ -64,5 +64,5 @@ READ_HELP_DOUCUMENTS()函数将会被优化为多帮助文档形式，用于BDir
 最终效果：<br>返回302跳转时<br>
 >[!] 302 redirect from http://example.com/login to http://example.com/admin2
 <br>
-#Anaz 负责try,except设计，依照目前可用的函数功能，为每个可用的函数添加try,except语句，如request.get语句如果执行不成功，便跳出该函数，并输出错误信息，让用户检查网络连接等。
+#alazymechnaic 感谢alazymechnaic的优秀的try except， 增加了identify404函数的健壮性
 <br>
