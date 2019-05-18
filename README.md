@@ -37,7 +37,9 @@ pip install requests<br>
 >Display_Color.WARING(PRIMARY_COLOR_DEFINE,"要更改颜色的数据")
 <br>
 注意! :该类仅返回带有颜色的数据，不输出，输出请使用print<br>
-例如`print (Display_Color.LOGO(PRIMARY_COLOR_DEFINE,要改变颜色的数据))`
+例如
+`print (Display_Color.LOGO(PRIMARY_COLOR_DEFINE,要改变颜色的数据))`
+
 <br>
 
 公示：
