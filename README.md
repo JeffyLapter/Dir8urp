@@ -43,6 +43,5 @@ pip install requests<br>
 最终效果：<br>返回302跳转时<br>
 >[!] 302 redirect from http://example.com/login to http://example.com/admin2
 <br>
-
-#Anaz任务我没时间写了要上自习了回来再写
+#Anaz 负责try,except设计，依照目前可用的函数功能，为每个可用的函数添加try,except语句，如request.get语句如果执行不成功，便跳出该函数，并输出错误信息，让用户检查网络连接等。
 <br>
