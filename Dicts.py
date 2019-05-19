@@ -1,6 +1,9 @@
 import os
 header={"headers":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 \
           (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36"}
+Dicts_of_404_Pages_Path=['/222.txt','/2222222.html','/235554.html','/sdasgrreeasdfsvvca.txt','/24gej040re2nasdf244.orm','/../ggeerv4513ddav.php','/../../4gej040re2nasdf244.orm','/../../../4gej040re2nasdf244.orm','/../../../../4gej040re2nasdf244.orm','/../../../../../4gej040re2nasdf244.orm','/../../../../../../4gej040re2nasdf244.orm','/../../../../../../../../4gej040re2nasdf244.orm']
+
+
 #print(os.path.dirname(__file__))
 def AddDictsPrimary():
     defaultpath=os.path.dirname(__file__)

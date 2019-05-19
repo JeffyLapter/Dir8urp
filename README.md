@@ -45,22 +45,19 @@ pip install requests<br>
 公示：
 --
 主检测函数将进行重写，以模块化类形式优化程序结构并单独封装，将利用hash方法，暂存方式，实现多个不同404页存储比对，来确保文件存在性检测返回结果精确。<br>
-主程序位置BDirectory.py <br>
-menu.py实现主程序命令交互式菜单.<br>
-rely.py中HELP_DOUCUMENT为帮助文档，以后所有帮助文档模块均从rely调用<br>
-READ_HELP_DOUCUMENTS()函数将会被优化为多帮助文档形式，用于BDirectory.py进行调用<br>
-将会重新一个ADD_DICT函数，以用于添加字典，或涉及文件操作相关知识<br>
-<br>
+主程序位置BDirectory.py 实现主程序命令交互式菜单.<br>
 
 2019/5/16任务分配：
 --
-#NothingH <br>
-
+#NothingH 负责url输入检测函数开发，要求：用户输入任意url都转换成http://example.com 的形式，函数接收参数一个，函数返回数据为str形式，位置在module.py模块中<br>
+测试用例：www.baidu.com - > http://www.baidu.com<br>
+测试用例：http：//www.baidu.com - > http://www.baidu.com<br>
+测试用例：www.baidu.com/admin -> http://www.baidu.com/admin<br>
 <br>
 
 #HC1024 负责404检测函数重定向模块开发，实现module.py中 行57 identify404() 函数错误返回302的重定向，即当服务器返回重定向302跳转请求时，返回跳转的url，回显到用户窗口中。<br>实现方法：新写一个函数接收302跳转信息并提取requests返回的跳转链接，返回标准链接str，进而可通过requests调用。<br>修改identify404函数，添加条件，调用新写的302函数,函数返回标准str<br>
 最终效果：<br>返回302跳转时<br>
 >[!] 302 redirect from http://example.com/login to http://example.com/admin2
 <br>
-#alazymechnaic 感谢alazymechnaic的优秀的try except， 增加了identify404函数的健壮性
+#Anaz 负责try,except设计，依照目前可用的函数功能，为每个可用的函数添加try,except语句，如request.get语句如果执行不成功，便跳出该函数，并输出错误信息，让用户检查网络连接等。
 <br>

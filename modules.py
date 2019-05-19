@@ -1,9 +1,18 @@
-from simhash import Simhash
-from Dicts import header
-import requests
+try:
+    from simhash import Simhash
+except:
+    print("[!] LACK OF Simhash,try 'pip install Simhash'")
+try:
+    import requests
+except:
+    print("[!] LACK OF requests,try 'pip install requests'")
+try:
+    from Dicts import header
+except:
+    print("[!] LACK OF 'Dicts.py',try to download the project again")
 from colorama import Fore,Back,Style,init   #THE COLORAMA USED FOR DISPLAY COLORED NOTES
 init(autoreset=True)                        #-- AUTO RESET THE COLOR OF OUTPUTS --#
-
+from Dicts import header,Dicts_of_404_Pages_Path
 
 #-- =======================RAW DATA AERA=================================== --#
 #--* Below are some raw data for extended modules to call with *--#
@@ -50,13 +59,17 @@ LOGO={
 #-- USAGE: print (Display_Color.LOGO(PRIMARY_COLOR_DEFINE,"stes")) --#
 class Display_Color(object):
     def WRONG(self,s):
-        return Fore.RED + s +Fore.RESET
+        return Fore.LIGHTRED_EX + s +Fore.RESET
     def SUCCESS(self,s):
         return Fore.GREEN + s +Fore.RESET
     def WARNING(self,s):
         return Fore.YELLOW + s +Fore.RESET 
     def LOGO(self,s):#-- COLOR 
         return Fore.MAGENTA+s+Fore.RESET
+    def BLUE(self,s):
+        return Fore.CYAN + s +Fore.RESET
+    def RED(self,s):
+        return Fore.LIGHTRED_EX+s+Fore.RESET
 PRIMARY_COLOR_DEFINE =Display_Color()#-- THE CLASS FOR COLORED OUT PUTS --#
 
 
@@ -65,6 +78,22 @@ PRIMARY_COLOR_DEFINE =Display_Color()#-- THE CLASS FOR COLORED OUT PUTS --#
 def main_LOGO():
     for i in range(1,7):
         print(Display_Color.LOGO(PRIMARY_COLOR_DEFINE,LOGO[i]))
+
+def main_LOGO_style_Green():
+    for i in range(1,7):
+        print(Display_Color.SUCCESS(PRIMARY_COLOR_DEFINE,LOGO[i]))
+
+def main_LOGO_style_Red():
+    for i in range(1,7):
+        print(Display_Color.WARNING(PRIMARY_COLOR_DEFINE,LOGO[i]))
+
+def main_LOGO_style_Blue():
+    for i in range(1,7):
+        print(Display_Color.BLUE(PRIMARY_COLOR_DEFINE,LOGO[i]))
+
+def main_LOGO_style_LightRed():
+    for i in range(1,7):
+        print(Display_Color.RED(PRIMARY_COLOR_DEFINE,LOGO[i]))
 
 #--------------------get_Reply_StatusNumber-------------------------------#
 #-- Function to get a returned status code and convert it to str --#
@@ -83,59 +112,48 @@ def Display_Reply_Status(ERROR_LIST,ReplyStatusNumber):
         print('Unknown error')
 
 
-#--------------------------identify_404------------------------------------#
-#-- Main Function to identify 404 and wrong replys with status 200 --#
-#-- domain uses as url trying to judge whether it existed or not, nowdomain display the error msg --# 
-def identify_404(domain, nowdomain):
-    try:
-      page4041 = requests.get(domain + '/dgasgdfsdf.txt', headers=header)
-    except requests.exceptions.ConnectionError:
-      print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE, "A connection error occured.\n Please try again later.\n"))
-    except requests.exceptions.ChunkedEncodingError:
-      print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE, "There is something wrong! \n ChunkedEncodingError!\n"))
-    except:
-      print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE, "Unknown Error\n Maybe you can try to install the Request Library to solve the problem.\n"))
-    try:
-      page4042 = requests.get(domain + '/dfag04ggg00dfw32a.xpd', headers=header)
-    except requests.exceptions.ConnectionError:
-      print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE, "A connection error occured.\n Please try again later.\n"))
-    except:
-      print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE,"Unknown Error\n Maybe you can try to install the Request Library to solve the problem.\n"))
-    try:
-      pagenow = requests.get(nowdomain, headers=header)
-    except requests.exceptions.ConnectionError:
-      print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE, "A connection error occured.\n Please try again later.\n"))
-    except:
-      print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE, "Unknown Error\n Maybe you can try to install the Request Library to solve the problem.\n"))
-    debugcode = [403, 405, 500, 503, 302, 301]
-    if pagenow.status_code == 404:
-        return False
-    if pagenow.status_code in debugcode:
-        print(SeverReplyStatus[str(pagenow.status_code)])
-    try:
-        hash_page4041 = Simhash(str(page4041.content))
-    except:
-        print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE,"Unknown Error\n Maybe you can try to install the Simhash Library to solve the problem.\n"))
-    try:
-        hash_page4042 = Simhash(str(page4042.content))
-    except:
-        print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE,"Unknown Error\n Maybe you can try to install the Simhash Library to solve the problem.\n"))
-    try:
-        hash_pagenow = Simhash(str(pagenow.content))
-    except:
-        print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE,"Unknown Error\n Maybe you can try to install the Simhash Library to solve the problem.\n"))
-    if hash_page4041.distance(hash_page4042) != 0:  # Check whether 404 has different echos
-        print("[!] Maybe different returns,check yourself: " + nowdomain)
-    else:
-        if hash_pagenow.distance(hash_page4041) < 3:
+#------------------------------- ! MAIN IDENTIFY FUNCTION ! ----------------------------#
+#-- ! MAIN FUNCTION TO CHECK EXISTING ! --#
+#-- !  FUN TAKES ONE PARMA , OUT PUT FALSE OR TRUE ! --#
+#-- ! TRUE = EXISTING || FALSE = 404 ! --#
+class IDENTIFY_MAIN(object):
+    def Add_Hash_Library(self,now_url):
+        P404_LIBRARY=[]
+        for PATHNOW in Dicts_of_404_Pages_Path:
+            TEMP_URL=(now_url)+PATHNOW
+            TEMP_PAGE=requests.get(TEMP_URL)
+            #print(TEMP_PAGE.content)
+            TEMP_PAGE_TEXT=str(TEMP_PAGE.content)
+            TEMP_PAGE_HASH=Simhash(TEMP_PAGE_TEXT)
+            #print(TEMP_PAGE_HASH.value)
+            P404_LIBRARY.append((str(TEMP_PAGE_HASH.value))[0:6])
+        return P404_LIBRARY
+    
+    def IDENTIFY_FUNCTION(self,LIST,url):
+        pre_check_page=requests.get(url)
+        if pre_check_page.status_code == 404:
+            return False
+        elif pre_check_page.status_code in [403, 405, 500, 503, 302, 301,400]:
+            print(Display_Color.WARNING(PRIMARY_COLOR_DEFINE,SeverReplyStatus[str(pre_check_page.status_code)]))
+            return False
+        else:
+            PAGE_TEST=requests.get(url)
+            #print(PAGE_TEST.content)
+            PAGE_HASH=Simhash(str(PAGE_TEST.content))
+      #print(PAGE_HASH.value)
+      #print(PAGE_HASH.value)
+        if (str(PAGE_HASH.value))[0:6] in LIST:
             return False
         else:
             return True
-"""----------------sECOND EDITED BY alazymechnaic------------------------------"""
-"""-----------------LAPTER GRSD!S AEERA ENDS RIGHT HERE------------------"""
+
+
+def URL_DEAL_NEXT(URLINPUTS):
+  return URLINPUTS[0:(URLINPUTS.rfind('/'))]#-- NOTICE STANDARD URL INPUT IS :http://admin.com or http://admin.com/1.php
 
 
 
+#这时确定服务器有自定义404页面，所以进入identify404函数进行下一步simhash特征值的判断
 
 
 '''#-=============================--- WRITTEN BY NOTHING_H -==================================-#'''
@@ -168,6 +186,61 @@ def Standard_URL_Convert(URLstr):
 
 
 '''#-- =============================================================== FUNCTION AERA END RIGHT HERE ============================================================= --#'''
+'''
+def identify_404(domain, nowdomain):
+    try:
+      page4041 = requests.get(domain + '/dgasgdfsdf.txt', headers=header)
+    except requests.exceptions.ConnectionError:
+      print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE, "A connection error occured.\n Please try again later.\n"))
+    except requests.exceptions.ChunkedEncodingError:
+      print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE, "There is something wrong! \n ChunkedEncodingError!\n"))
+    except:
+      print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE, "Unknown Error\n Maybe you can try to install the Request Library to solve the problem.\n"))
+    try:
+      page4042 = requests.get(domain + '/dfag04ggg00dfw32a.xpd', headers=header)
+    except requests.exceptions.ConnectionError:
+      print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE, "A connection error occured.\n Please try again later.\n"))
+    except:
+      print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE,"Unknown Error\n Maybe you can try to install the Request Library to solve the problem.\n"))
+    try:
+      pagenow = requests.get(nowdomain, headers=header)
+    except requests.exceptions.ConnectionError:
+      print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE, "A connection error occured.\n Please try again later.\n"))
+    except:
+      print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE, "Unknown Error\n Maybe you can try to install the Request Library to solve the problem.\n"))
+    debugcode = [403, 405, 500, 503, 302, 301]
+    if pagenow.status_code == 404:
+        return False
+    if pagenow.status_code in debugcode:
+        print(Display_Color.WARNING(PRIMARY_COLOR_DEFINE,SeverReplyStatus[str(pagenow.status_code)]))
+    try:
+        hash_page4041 = Simhash(str(page4041.content))
+    except:
+        print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE,"Unknown Error\n Maybe you can try to install the Simhash Library to solve the problem.\n"))
+    try:
+        hash_page4042 = Simhash(str(page4042.content))
+    except:
+        print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE,"Unknown Error\n Maybe you can try to install the Simhash Library to solve the problem.\n"))
+    try:
+        hash_pagenow = Simhash(str(pagenow.content))
+    except:
+        print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE,"Unknown Error\n Maybe you can try to install the Simhash Library to solve the problem.\n"))
+    if hash_page4041.distance(hash_page4042) != 0:  # Check whether 404 has different echos
+        print(Display_Color.WARNING(PRIMARY_COLOR_DEFINE,"[!] Maybe different returns,check yourself: " + nowdomain))
+    else:
+        if hash_pagenow.distance(hash_page4041) < 3:
+            return False
+        else:
+            return True
+print(identify_404("https://www.csdn.net/1111111111","https://www.csdn.net"))
+
+    '''
+
+"""----------------sECOND EDITED BY alazymechnaic------------------------------"""
+"""-----------------LAPTER GRSD!S AEERA ENDS RIGHT HERE------------------"""
+
+
+
 
 
 #-- BELOW ARE FUNCTIONS UNUSED --#
