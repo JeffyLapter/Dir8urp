@@ -13,6 +13,7 @@ except:
 from colorama import Fore,Back,Style,init   #THE COLORAMA USED FOR DISPLAY COLORED NOTES
 init(autoreset=True)                        #-- AUTO RESET THE COLOR OF OUTPUTS --#
 from Dicts import header,Dicts_of_404_Pages_Path
+from time import sleep as WAIT
 
 #-- =======================RAW DATA AERA=================================== --#
 #--* Below are some raw data for extended modules to call with *--#
@@ -23,16 +24,17 @@ AVAILABLE_USER_SELECT={
 }
 
 #-- $ServerReplyStatus is used for external function to call with in order to display the error reply of the Server --#
-SeverReplyStatus={
+ServerReplyStatus={
     '200':'[+] 200 OK',
-    '204':'[+] Sever Returned status 204',
-    '302':'[!] Sever Returned status 302 redirect',
+    '204':'[+] Server Returned status 204',
+    '302':'[!] Server Returned status 302 redirect',
     '403':'[-] 403-Forbidden',
     '404':'[-] 404 Not Found',
     '405':'[-] 405 ERROR',
     '408':'[-] Request Time out',
-    '500':'[-] Sever ERROR 500',
-    '503':'[-] Sever Error 503'
+    '500':'[-] Server ERROR 500',
+    '503':'[-] Server Error 503',
+    '400':'[-] Server returned 400'
 
 }
 LOGO={
@@ -41,7 +43,7 @@ LOGO={
     3:r'  / / / /  / /  / ___/  / __  |  / / / /  / ___/  / __ \\',
     4:r' / /_/ /  / /  / /     / /_/ /  / /_/ /  / /     / /_/ /',
     5:r'/_____/  /_/  /_/      \____/   \__,_/  /_/     / .___/ ',
-    6:r'                                               /_/      '
+    6:r'                                               /_/      '+'\n'
 }
 
 #-- =======================RAW DATA AERA=================================== --#
@@ -120,13 +122,14 @@ class IDENTIFY_MAIN(object):
     def Add_Hash_Library(self,now_url):
         P404_LIBRARY=[]
         for PATHNOW in Dicts_of_404_Pages_Path:
-            TEMP_URL=(now_url)+PATHNOW
+            TEMP_URL=URL_DEAL_NEXT(now_url)+PATHNOW
             TEMP_PAGE=requests.get(TEMP_URL)
             #print(TEMP_PAGE.content)
             TEMP_PAGE_TEXT=str(TEMP_PAGE.content)
             TEMP_PAGE_HASH=Simhash(TEMP_PAGE_TEXT)
             #print(TEMP_PAGE_HASH.value)
             P404_LIBRARY.append((str(TEMP_PAGE_HASH.value))[0:6])
+            WAIT(0.1)
         return P404_LIBRARY
     
     def IDENTIFY_FUNCTION(self,LIST,url):
@@ -134,7 +137,8 @@ class IDENTIFY_MAIN(object):
         if pre_check_page.status_code == 404:
             return False
         elif pre_check_page.status_code in [403, 405, 500, 503, 302, 301,400]:
-            print(Display_Color.WARNING(PRIMARY_COLOR_DEFINE,SeverReplyStatus[str(pre_check_page.status_code)]))
+            #print(url+' '*5+Display_Color.WRONG(PRIMARY_COLOR_DEFINE,ServerReplyStatus[str(pre_check_page.status_code)]))
+            print("%-90s%-50s"%(Display_Color.WARNING(PRIMARY_COLOR_DEFINE,url),Display_Color.WARNING(PRIMARY_COLOR_DEFINE,ServerReplyStatus[str(pre_check_page.status_code)])))
             return False
         else:
             PAGE_TEST=requests.get(url)
@@ -146,6 +150,11 @@ class IDENTIFY_MAIN(object):
             return False
         else:
             return True
+    def DISPLAY_MAIN(self,urli,boolin):
+        if boolin is True:
+            print("%-90s%-50s"%(Display_Color.SUCCESS(PRIMARY_COLOR_DEFINE,urli),Display_Color.SUCCESS(PRIMARY_COLOR_DEFINE,ServerReplyStatus['200'])))
+        else:
+            print("%-90s%-50s"%(Display_Color.WARNING(PRIMARY_COLOR_DEFINE,urli),Display_Color.WRONG(PRIMARY_COLOR_DEFINE,ServerReplyStatus['404'])))
 
 
 def URL_DEAL_NEXT(URLINPUTS):
@@ -176,7 +185,7 @@ def Standard_URL_Convert(URLstr):
         CorrectURL="http://"+URLstr[fnum:count]
     return CorrectURL
 
-
+#print(Standard_URL_Convert('http://jggz.jinan.cn/col/col1863/'))
 
 #-------------------------------Standard_URL_Convert-------------------------#
 '''#-=-----------------=Nothing_H !S AREA ENDS RIGHT HERE===--------------------------------==-#'''
@@ -212,7 +221,7 @@ def identify_404(domain, nowdomain):
     if pagenow.status_code == 404:
         return False
     if pagenow.status_code in debugcode:
-        print(Display_Color.WARNING(PRIMARY_COLOR_DEFINE,SeverReplyStatus[str(pagenow.status_code)]))
+        print(Display_Color.WARNING(PRIMARY_COLOR_DEFINE,ServerReplyStatus[str(pagenow.status_code)]))
     try:
         hash_page4041 = Simhash(str(page4041.content))
     except:

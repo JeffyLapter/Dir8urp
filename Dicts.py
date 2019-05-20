@@ -10,8 +10,8 @@ def AddDictsPrimary():
     path=input("Please input the path of your dicts:")
     #IF THE PATH UNSET USE THE DEFALUT PATH
     if path=='':
-        print("Prepare to use the default dicts in E:/python/PYVSC/4/dicts.txt")
         path=defaultpath+r"\dicts.txt"
+        print("Prepare to use the default dicts in "+path+'\n')
     dictsread=open(path,'r')
     DICTSOUTPUT=list()
     OUTRANGE=list()
