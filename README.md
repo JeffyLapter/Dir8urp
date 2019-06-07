@@ -7,8 +7,8 @@ Dir8urp
 #依赖库：Simhash requests<br>
 命令：<br>
 ```python
-pip install Simhash<br>
-pip install requests<br>
+pip install Simhash
+pip install requests
 ```
 测试import simhash,requests<br>
 <br>
