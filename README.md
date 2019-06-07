@@ -40,10 +40,13 @@ pip install requests<br>
 --
 位置modules.py line 45 class Display_Color(object)<br>
 使用方法<br>
->Display_Color.LOGO(PRIMARY_COLOR_DEFINE,"要更改颜色的数据")
->Display_Color.WRONG(PRIMARY_COLOR_DEFINE,"要更改颜色的数据")
->Display_Color.SUCCESS(PRIMARY_COLOR_DEFINE,"要更改颜色的数据")
->Display_Color.WARING(PRIMARY_COLOR_DEFINE,"要更改颜色的数据")
+```python
+from modules import PRIMARY_COLOR_DEFINE,Display_Color
+Display_Color.LOGO(PRIMARY_COLOR_DEFINE,"要更改颜色的数据")
+Display_Color.WRONG(PRIMARY_COLOR_DEFINE,"要更改颜色的数据")
+Display_Color.SUCCESS(PRIMARY_COLOR_DEFINE,"要更改颜色的数据")
+Display_Color.WARING(PRIMARY_COLOR_DEFINE,"要更改颜色的数据")
+```
 <br>
 注意! :该类仅返回带有颜色的数据，不输出，输出请使用print<br>
 例如
