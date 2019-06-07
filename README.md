@@ -58,7 +58,8 @@ Display_Color.WARING(PRIMARY_COLOR_DEFINE,"要更改颜色的数据")
 print(Display_Color.LOGO(PRIMARY_COLOR_DEFINE,要改变颜色的数据))
 ```
 <br>
-你可以对任何将要回显在屏幕上的数据设计颜色类输出
+你可以对任何将要回显在屏幕上的数据设计颜色类输出<br>
+
 ```python
 输出函数(Display_Color.XXX(PRIMARY_COLOR_DEFINE,输出数据))
 ```
