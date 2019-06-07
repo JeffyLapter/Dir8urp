@@ -6,8 +6,10 @@ Dir8urp
 内测开发者为:<br>JeffyLapter<br>NothingH<br>alazymechnaic<br>HC1024<br>
 #依赖库：Simhash requests<br>
 命令：<br>
+```python
 pip install Simhash<br>
 pip install requests<br>
+```
 测试import simhash,requests<br>
 <br>
 
