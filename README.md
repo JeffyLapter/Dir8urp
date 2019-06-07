@@ -65,6 +65,7 @@ print(Display_Color.LOGO(PRIMARY_COLOR_DEFINE,要改变颜色的数据))
 ```
 <br>
 颜色类的具体位置在modules.py中<br>
+
 ```python
 #------------------COLOR_PRIMARY_DEFINE----------------------------------#
 #-- THE FUNCTION TO CHANGE THE OUTPUT COLOR --#
@@ -84,6 +85,7 @@ class Display_Color(object):
         return Fore.LIGHTRED_EX+s+Fore.RESET
 PRIMARY_COLOR_DEFINE =Display_Color()#-- THE CLASS FOR COLORED OUT PUTS --#
 ```
+
 <br>
 公示：
 --
