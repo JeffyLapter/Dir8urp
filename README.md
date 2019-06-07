@@ -3,7 +3,7 @@ Dir8urp
 开发语言python 3.6，它的名字叫Dir8urp，非常de炫酷<br>
 现在实现的功能为扫描后台目录与敏感文件<br>
 希望在之后能有更多的功能<br>
-内测开发者为:<font color="green">JeffyLapter  NothingH  alazymechnaic  HC1024</font><br>
+内测开发者为:<span style="color:green">JeffyLapter  NothingH  alazymechnaic  HC1024</span><br>
 #依赖库：Simhash requests<br>
 命令：<br>
 ```python
