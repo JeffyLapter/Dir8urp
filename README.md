@@ -35,6 +35,10 @@ pip install requests<br>
 主菜单文件为menu.py,帮助文件在rely.py<br>
 在编写新模块时，需要单独创建新的.py文件，并在主菜单导入，并在modules.py中写入AVAILABLE_USER_SELECT字典中，在menu.py在源代码基础上elif形式实现功能选择,在rely.py模块中写一个模块的help文档输出函数<br>
 开发新模块时，如需要颜色显示，请使用已有的颜色类使用方法，颜色类在modules.py中,用法如下<br>
+'''python
+import this
+'''
+<br>
 
 
 颜色类使用方法：
