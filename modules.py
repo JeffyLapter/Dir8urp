@@ -22,7 +22,8 @@ AVAILABLE_USER_SELECT={
     'HELP':1,
     'DB':2
 }
-
+header={"headers":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 \
+          (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36"}
 #-- $ServerReplyStatus is used for external function to call with in order to display the error reply of the Server --#
 ServerReplyStatus={
     '200':'[+] 200 OK',
@@ -34,6 +35,7 @@ ServerReplyStatus={
     '408':'[-] Request Time out',
     '500':'[-] Server ERROR 500',
     '503':'[-] Server Error 503',
+    '502':'[-] Server Error 502 ',
     '400':'[-] Server returned 400'
 
 }
@@ -118,12 +120,22 @@ def Display_Reply_Status(ERROR_LIST,ReplyStatusNumber):
 #-- ! MAIN FUNCTION TO CHECK EXISTING ! --#
 #-- !  FUN TAKES ONE PARMA , OUT PUT FALSE OR TRUE ! --#
 #-- ! TRUE = EXISTING || FALSE = 404 ! --#
+def Check_Alive(url):
+        try:
+            print(Display_Color.SUCCESS(PRIMARY_COLOR_DEFINE,"Trying to test the connection to the target "+url+"   ..."))
+            result=requests.get(url,headers=header)
+        except ConnectionError:
+            print("ERROR! "+Display_Color.WRONG(PRIMARY_COLOR_DEFINE,ServerReplyStatus[str(result.status_code)]))
+            exit(0)
+        print(Display_Color.SUCCESS(PRIMARY_COLOR_DEFINE,"Success!\n"))
+
 class IDENTIFY_MAIN(object):
     def Add_Hash_Library(self,now_url):
+        Check_Alive(now_url)
         P404_LIBRARY=[]
         for PATHNOW in Dicts_of_404_Pages_Path:
-            TEMP_URL=URL_DEAL_NEXT(now_url)+PATHNOW
-            TEMP_PAGE=requests.get(TEMP_URL)
+            TEMP_URL=str(now_url+PATHNOW)
+            TEMP_PAGE=requests.get(TEMP_URL,headers=header)
             #print(TEMP_PAGE.content)
             TEMP_PAGE_TEXT=str(TEMP_PAGE.content)
             TEMP_PAGE_HASH=Simhash(TEMP_PAGE_TEXT)
@@ -131,34 +143,32 @@ class IDENTIFY_MAIN(object):
             P404_LIBRARY.append((str(TEMP_PAGE_HASH.value))[0:6])
             WAIT(0.1)
         return P404_LIBRARY
-    
+        
     def IDENTIFY_FUNCTION(self,LIST,url):
-        pre_check_page=requests.get(url)
-        if pre_check_page.status_code == 404:
-            return False
-        elif pre_check_page.status_code in [403, 405, 500, 503, 302, 301,400]:
-            #print(url+' '*5+Display_Color.WRONG(PRIMARY_COLOR_DEFINE,ServerReplyStatus[str(pre_check_page.status_code)]))
-            print("%-90s%-50s"%(Display_Color.WARNING(PRIMARY_COLOR_DEFINE,url),Display_Color.WARNING(PRIMARY_COLOR_DEFINE,ServerReplyStatus[str(pre_check_page.status_code)])))
-            return False
+        pre_check_page=requests.get(url,headers=header)
+        if pre_check_page.status_code in [404,400,403,302,301,500,502,203]:
+            return pre_check_page.status_code
         else:
-            PAGE_TEST=requests.get(url)
+            PAGE_TEST=requests.get(url,headers=header)
             #print(PAGE_TEST.content)
             PAGE_HASH=Simhash(str(PAGE_TEST.content))
+            PAGE_HASH_VALUE=PAGE_HASH.value
       #print(PAGE_HASH.value)
       #print(PAGE_HASH.value)
-        if (str(PAGE_HASH.value))[0:6] in LIST:
-            return False
+        if (str(PAGE_HASH_VALUE))[0:6] in LIST:
+            return 404
         else:
-            return True
+            return 200
     def DISPLAY_MAIN(self,urli,boolin):
-        if boolin is True:
+        if boolin == 200:
             print("%-90s%-50s"%(Display_Color.SUCCESS(PRIMARY_COLOR_DEFINE,urli),Display_Color.SUCCESS(PRIMARY_COLOR_DEFINE,ServerReplyStatus['200'])))
         else:
-            print("%-90s%-50s"%(Display_Color.WARNING(PRIMARY_COLOR_DEFINE,urli),Display_Color.WRONG(PRIMARY_COLOR_DEFINE,ServerReplyStatus['404'])))
+            print("%-90s%-50s"%(Display_Color.WARNING(PRIMARY_COLOR_DEFINE,urli),Display_Color.WRONG(PRIMARY_COLOR_DEFINE,ServerReplyStatus[str(boolin) ])))
 
 
 def URL_DEAL_NEXT(URLINPUTS):
   return URLINPUTS[0:(URLINPUTS.rfind('/'))]#-- NOTICE STANDARD URL INPUT IS :http://admin.com or http://admin.com/1.php
+
 
 
 

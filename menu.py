@@ -5,7 +5,9 @@ from modules import PRIMARY_COLOR_DEFINE
 from modules import AVAILABLE_USER_SELECT
 from rely import READ_HELP_DOUCUMENTS
 from BDirectory import BDirectory
+#test
 def MAIN_MENU():
+    system("cls")
     USER_SELECTION='UNDEFINED'
     while USER_SELECTION not in AVAILABLE_USER_SELECT:
         main_LOGO()

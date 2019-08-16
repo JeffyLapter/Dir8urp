@@ -9,6 +9,7 @@ def BDirectory():
     main_LOGO_style_Blue()
     TEST=IDENTIFY_MAIN()
     URL=''
+    
     try:
         URL= input("Please input your url:"+" "*5+ "eg:http://example.com/\n")
         while URL == '':
@@ -27,6 +28,7 @@ def BDirectory():
         NOWURL=URL+'/'+path
         IDENTIFY_MAIN.DISPLAY_MAIN(TEST,NOWURL,IDENTIFY_MAIN.IDENTIFY_FUNCTION(TEST,LIST,NOWURL))
     input(Display_Color.SUCCESS(PRIMARY_COLOR_DEFINE,"TYPE ANY THING TO GET BACK TO THE PRIMARY MENU:"))
+
 #BDirectory()
 
 
