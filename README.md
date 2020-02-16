@@ -32,13 +32,13 @@ pip install requests<br>
 一个插件需要有一个无参数接口，接口函数为插件名称</br>
 例:插件 Plugin.py</br>
 ```python
-#创建Plugin.py
+#Plugin.py
 def Main(url):
   pass#功能实现
-  
 def Plugin():#无参数接口
   main_LOGO_style_Green()#显示LOGO，可以自己替换
   print("说明插件需要输入什么")
+  url_raw=input()#接收用户输入的URL
   url=Standard_URL_Convert(url_raw)#调用url标准化转换
   Check_Alive(url)#调用目标存活检测
   Main(url)#调用插件功能
@@ -61,6 +61,7 @@ AVAILABLE_USER_SELECT={
   elif AVAILABLE_USER_SELECT.get(USER_SELECTION) == 4:#添加
     Plugin()#添加
 ```
+URL标准化转化，目标存活检测直接调用即可。尽量添加try except
 
 
 颜色类使用方法：
