@@ -8,7 +8,8 @@ import requests
 from Dicts import header
 import hashlib 
 import threading
-#Payload Lib
+import time
+#Dependence Payload Lib /sql_fuzz.txt,/ssrf_fuzz.txt,/xss_fuzz.txt,/parameter.txt
 dictsLib=['/sql_fuzz.txt','/ssrf_fuzz.txt','/xss_fuzz.txt']
 #Final Result List
 Valid_Result=[]
@@ -17,6 +18,7 @@ def stringtomd5(originstr):
     signaturemd5 = hashlib.md5()
     signaturemd5.update(originstr.encode('utf-8'))
     return signaturemd5.hexdigest()
+#Called in Thread
 def Get_FuzzTest(url,dictPath):
     defaultpath=os.path.dirname(__file__)
     path=defaultpath+dictPath
@@ -38,7 +40,7 @@ def Get_FuzzTest(url,dictPath):
     if(str(test_response.status_code)[0] in el):
         print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE,"Url Unreachable"))
         return
-    #Get the normal page
+    #Get MD5 from the usual page MD5
     Orign=stringtomd5(test_response.text)
     for key in parameter:
         for payload in payloads:
@@ -79,6 +81,11 @@ class RunThread(threading.Thread):
         self.path=Dict_path
     def run(self):
         Get_FuzzTest(self.Url,self.path)
+
+
+
+
+#Start Function Here! Fuzz all API
 def Run_Fuzz_now(url):
     #SQL Fuzz Thread
     sql_thread=RunThread(url,dictsLib[0])
@@ -89,10 +96,16 @@ def Run_Fuzz_now(url):
     #ssrf Fuzz Thread
     ssrf_thread=RunThread(url,dictsLib[2])
     ssrf_thread.start()
-    print("Valid Payload:")
-    for i in Valid_Result:
-        print(Display_Color.SUCCESS(PRIMARY_COLOR_DEFINE,i))
+    while(1):
+        time.sleep(1)
+        #check whether threads Completed operation
+        if(ssrf_thread.is_alive() and Xss_thread.is_alive() and sql_thread.is_alive()):
+            continue
+        else:
+            print("Valid Payload:")
+            for i in Valid_Result:
+                print(Display_Color.SUCCESS(PRIMARY_COLOR_DEFINE,i))
         
 
 #Example Here
-#Run_Fuzz_now("http://www.example.com/?a=1&b=2")
+Run_Fuzz_now("http://www.example.com/?a=1&b=2")
