@@ -3,6 +3,7 @@ import os
 HELP_DOUCUMENT="""
     --THIS IS A PRIMARY HELP DOC OF THE TOOLS--
     type "DB" to use the Directory Burp module,
+    type "FUZZ" to use the FUZZ Burp module,
     type "HELP" to show this Document
     type CTRL+Z to get back to the primary Selector to start your use
 

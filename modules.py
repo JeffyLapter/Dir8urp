@@ -20,7 +20,8 @@ from time import sleep as WAIT
 #-- used to USERS_SELECT --#
 AVAILABLE_USER_SELECT={
     'HELP':1,
-    'DB':2
+    'DB':2,
+    'FUZZ':3
 }
 header={"headers":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 \
           (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36"}

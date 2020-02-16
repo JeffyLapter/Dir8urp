@@ -1,7 +1,7 @@
 from modules import Display_Color,PRIMARY_COLOR_DEFINE #COLORS
 from modules import main_LOGO,main_LOGO_style_Blue,main_LOGO_style_Green,main_LOGO_style_Red,main_LOGO_style_LightRed
 from modules import IDENTIFY_MAIN,ServerReplyStatus
-from modules import Standard_URL_Convert
+from modules import Standard_URL_Convert,Check_Alive
 import os
 from urllib.parse import urlparse,parse_qs
 import requests
@@ -107,5 +107,14 @@ def Run_Fuzz_now(url):
                 print(Display_Color.SUCCESS(PRIMARY_COLOR_DEFINE,i))
         
 
+def Burp_Fuzz():
+    main_LOGO_style_Green()
+    print("\nFUZZ target:")
+    url_raw=input()
+    url_in=Standard_URL_Convert(url_raw)
+    Check_Alive(url_in)
+    Run_Fuzz_now(url_in)
+    
 #Example Here
-#Run_Fuzz_now("http://www.example.com/?a=1&b=2")
+
+#Run_Fuzz_now("http://39.106.97.149/?a=1&b=2")

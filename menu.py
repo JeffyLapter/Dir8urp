@@ -5,6 +5,7 @@ from modules import PRIMARY_COLOR_DEFINE
 from modules import AVAILABLE_USER_SELECT
 from rely import READ_HELP_DOUCUMENTS
 from BDirectory import BDirectory
+from Burp_Fuzz import Burp_Fuzz
 #test
 def MAIN_MENU():
     system("cls")
@@ -23,6 +24,8 @@ def MAIN_MENU():
             READ_HELP_DOUCUMENTS()
         elif AVAILABLE_USER_SELECT.get(USER_SELECTION) == 2:
             BDirectory()
+        elif AVAILABLE_USER_SELECT.get(USER_SELECTION) == 3:
+            Burp_Fuzz()
         elif USER_SELECTION == 'exit':
             exit(0)
         else:
