@@ -54,7 +54,7 @@ def Get_FuzzTest(url,dictPath):
                 print(ServerReplyStatus[str(Test_result.status_code)]+"--->"+key+"="+payload)
     #Read Parameter dicts
     try:
-        parameter_dicts=open(defaultpath+'/parameter.txt','r',errors='ignore')
+        parameter_dicts=open(defaultpath+'/parameter_fuzz.txt','r',errors='ignore')
     except:
         print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE,"Lake dicts named"+dictPath))
         return 
