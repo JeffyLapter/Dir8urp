@@ -27,6 +27,42 @@ pip install requests<br>
 >#-- $variable means $variable is a variable that you used in your notes to explain your functions --#<br>
 <br>
 
+插件开发：
+--
+一个插件需要有一个无参数接口，接口函数为插件名称</br>
+例:插件 Plugin.py</br>
+```python
+#创建Plugin.py
+def Main(url):
+  pass#功能实现
+  
+def Plugin():#无参数接口
+  main_LOGO_style_Green()#显示LOGO，可以自己替换
+  print("说明插件需要输入什么")
+  url=Standard_URL_Convert(url_raw)#调用url标准化转换
+  Check_Alive(url)#调用目标存活检测
+  Main(url)#调用插件功能
+
+#修改modules.py
+AVAILABLE_USER_SELECT={
+    'HELP':1,
+    'DB':2,
+    'FUZZ':3,
+    'PLUGIN':4 #添加
+}
+
+#修改menu.py 为主菜单添加功能
+  if AVAILABLE_USER_SELECT.get(USER_SELECTION) == 1:
+    READ_HELP_DOUCUMENTS()
+  elif AVAILABLE_USER_SELECT.get(USER_SELECTION) == 2:
+    BDirectory()
+  elif AVAILABLE_USER_SELECT.get(USER_SELECTION) == 3:
+    Burp_Fuzz()
+  elif AVAILABLE_USER_SELECT.get(USER_SELECTION) == 4:#添加
+    Plugin()#添加
+```
+
+
 颜色类使用方法：
 --
 位置modules.py line 45 class Display_Color(object)<br>
