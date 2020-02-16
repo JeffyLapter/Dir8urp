@@ -108,4 +108,4 @@ def Run_Fuzz_now(url):
         
 
 #Example Here
-Run_Fuzz_now("http://www.example.com/?a=1&b=2")
+#Run_Fuzz_now("http://www.example.com/?a=1&b=2")
