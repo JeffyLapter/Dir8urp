@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from modules import Display_Color,PRIMARY_COLOR_DEFINE #COLORS
 from modules import main_LOGO,main_LOGO_style_Blue,main_LOGO_style_Green,main_LOGO_style_Red,main_LOGO_style_LightRed
 from modules import IDENTIFY_MAIN,ServerReplyStatus

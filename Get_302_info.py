@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 def get_302_info(domain):
     try:
         page_302 = requests.get(domain,headers=header,allow_redirects = False,timeout=3)

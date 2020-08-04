@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from modules import PRIMARY_COLOR_DEFINE,Display_Color
 import os
 HELP_DOUCUMENT="""

@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from os import system
 from modules import LOGO
 from modules import main_LOGO

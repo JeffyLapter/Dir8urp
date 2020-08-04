@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 try:
     from simhash import Simhash
 except:
